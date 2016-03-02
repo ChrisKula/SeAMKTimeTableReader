@@ -1,0 +1,11 @@
+*.classpath
+*.project
+*.prefs
+*.pdf
+target/SeAMKTimeTableReader-0.0.1-SNAPSHOT.jar
+target/archive-tmp
+target/generated-sources
+target/maven-archiver
+target/maven-status
+
+*.class
