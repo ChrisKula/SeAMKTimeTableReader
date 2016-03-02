@@ -1,0 +1,5 @@
+com\christiankula\seamktimetablereader\pojos\Course.class
+com\christiankula\seamktimetablereader\enums\EnumDay.class
+com\christiankula\seamktimetablereader\enums\EnumStartingHour.class
+com\christiankula\seamktimetablereader\enums\EnumEndingHour.class
+com\christiankula\seamktimetablereader\main\Main.class
