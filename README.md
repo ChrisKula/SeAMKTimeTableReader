@@ -10,8 +10,8 @@ The script can be direclty downloaded from this repository's target directory on
 
 <h3>Syntax and Usage</h3>
 
-In order to this script to work,make sure there is a plain text file called <code><b>not_my_courses.txt.</b></code> containing <b>ALL THE COURSES YOU DON'T HAVE</b> (one course per line) in the same directory as the jar file.
-To run it, just double click on it. One pdf file per time table is created in the same directory.
+In order to this script to work,make sure there is a plain text file called <code><b>not_my_courses.txt</b></code> containing <b>ALL THE COURSES YOU DON'T HAVE</b> (one course per line) in the same directory as the jar file.<br/>
+To run it, just double click on it. One pdf file per time table is created in the same directory.<br/>
 
 You can also run form the terminal with : <br/><code>java -jar SeAMK Timetable Reader.jar</code>
 
