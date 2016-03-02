@@ -2,8 +2,6 @@
 Simple script to filter SeAMK time tables with only courses you have
 
 
-This script allows you to easily download mangas from mangafox.me. You can also download a specific volume or a specific chapter.
-
 This script allows you to filter SeAMK time tables and create a simple pdf file with your courses ordered by day.
 
 In order to use this script, you must have at least <b>Java Runtime Environment 1.5</b> installed on your computer.<br/>
@@ -12,11 +10,10 @@ The script can be direclty downloaded from this repository's target directory on
 
 <h3>Syntax and Usage</h3>
 
-In order to this script to work,make sure there is a plain text file called <b>not_my_courses.txt.</b> containing <b>ALL THE COURSES YOU DON'T HAVE</b> (one course per line) in the same directory as the jar file.
+In order to this script to work,make sure there is a plain text file called <code><b>not_my_courses.txt.</b></code> containing <b>ALL THE COURSES YOU DON'T HAVE</b> (one course per line) in the same directory as the jar file.
 To run it, just double click on it. One pdf file per time table is created in the same directory.
 
-You can also run form the terminal with 
-<code>java -jar SeAMK Timetable Reader.jar</code>
+You can also run form the terminal with : <br/><code>java -jar SeAMK Timetable Reader.jar</code>
 
 
 <h3>Installation</h3>
