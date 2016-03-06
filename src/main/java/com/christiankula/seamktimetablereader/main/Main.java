@@ -193,13 +193,13 @@ public class Main {
 			courses.put(c.getDay(), coursesOfTheDay);
 		    }
 
-		    printTimetableToPdf(title, courses);
+		    printTimetableToPdf(title, courses, url);
 		}
 	    }
 	}
     }
 
-    private static void printTimetableToPdf(String title, Map<EnumDay, List<Course>> courses) {
+    private static void printTimetableToPdf(String title, Map<EnumDay, List<Course>> courses, String timetableUrl) {
 	OutputStream os = null;
 	title = title.replace("...", " - ").replace(":", " -");
 	String css = "<style>" + "h1 {" + "text-align:center;" + "}" + "p {" + "width:100%; "
@@ -214,6 +214,8 @@ public class Main {
 	html += head;
 	html += "<body>";
 	html += "<h1>" + title + "</h1>";
+
+	html += "<a href='" + timetableUrl + "'>" + timetableUrl + "</a>";
 
 	List<EnumDay> sortedDayKeys = new ArrayList<EnumDay>(courses.keySet());
 	Collections.sort(sortedDayKeys);
@@ -280,7 +282,7 @@ public class Main {
 	int startingWeek = 8;
 	final int endingWeek = 21;
 	int startingTimetableID = 3028;
-	String baseUrl = "http://lukkarit.epedu.fi/LukujarjestyksetSeAMKLiiketoimintajaKulttuuriFramiF/AMK/2015-2016/vko%s/x%sgateway16k6902.htm";
+	final String baseUrl = "http://lukkarit.epedu.fi/LukujarjestyksetSeAMKLiiketoimintajaKulttuuriFramiF/AMK/2015-2016/vko%s/x%sgateway16k6902.htm";
 
 	for (; startingWeek <= endingWeek; startingWeek++) {
 	    String s_startingWeek = startingWeek + "";
