@@ -34,7 +34,7 @@ import com.christiankula.seamktimetablereader.pojos.Course;
 
 public class Main {
     static String TIMETABLE_URL = "http://lukkarit.epedu.fi/LukujarjestyksetSeAMKLiiketoimintajaKulttuuriFramiF/AMK/2015-2016/vko08/x3028gateway16k6902.htm";
-
+    static final String htmlPageBreak = "<br/>";
     static final int TIME_OUT_IN_MILLIS = 3000;
 
     public static void main(String[] args) {
@@ -104,20 +104,32 @@ public class Main {
 			weekDates.put(EnumDay.getDayByIndex(columnIndex - 1), dayDate);
 		    }
 
+		    Elements coursesElements = timeTableRows.get(2).children();
+		    for (int columnIndex = 1; columnIndex < coursesElements.size(); columnIndex++) {
+			Element courseElement = coursesElements.get(columnIndex);
+
+			String cellContent = courseElement.text();
+
+			if (cellContent.equals("/////")) {
+			    timeSlotOverflowMap.put(EnumDay.getDayByIndex(columnIndex - 1), 20);
+			}
+		    }
+
 		    for (int rowIndex = 2; rowIndex < timeTableRows.size(); rowIndex++) {
-			Elements coursElements = timeTableRows.get(rowIndex).children();
+			coursesElements = timeTableRows.get(rowIndex).children();
 
 			updateTimeSlotOverflowMap(timeSlotOverflowMap);
 
-			for (int columnIndex = 1; columnIndex < coursElements.size(); columnIndex++) {
+			for (int columnIndex = 1; columnIndex < coursesElements.size(); columnIndex++) {
 
-			    Element courseElement = coursElements.get(columnIndex);
+			    Element courseElement = coursesElements.get(columnIndex);
 
 			    String cellContent = courseElement.text();
 
 			    if (!StringUtil.isBlank(cellContent.replaceAll("\u00a0", "").trim())
 				    && !cellContent.equals("/////")) {
 				Course course = new Course();
+
 				int currentDayIndex = columnIndex - 1;
 				EnumDay currentDay = EnumDay.getDayByIndex(currentDayIndex);
 
@@ -136,7 +148,7 @@ public class Main {
 				    course.setEndingHour(
 					    EnumEndingHour.getEndingHourByIndex((rowIndex - 2) + rowpsanOverflowSize));
 
-				    timeSlotOverflowMap.put(course.getDay(), rowpsanOverflowSize+1);
+				    timeSlotOverflowMap.put(course.getDay(), rowpsanOverflowSize + 1);
 				} else {
 				    course.setEndingHour(EnumEndingHour.getEndingHourByIndex(rowIndex + 1 - 2));
 				    timeSlotOverflowMap.put(course.getDay(), 0);
@@ -154,12 +166,12 @@ public class Main {
 		    try {
 			notMyCourses = Files.readAllLines(notMyCoursesFilePath);
 		    } catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		    }
 
 		    List<Course> FILTERED_COURSES = new ArrayList<Course>(FULL_COURSES);
 
+		    Collections.sort(FULL_COURSES);
 		    for (Course c : FULL_COURSES) {
 			for (String s : notMyCourses) {
 			    if (c.getSubject().contains(s)) {
@@ -168,7 +180,7 @@ public class Main {
 			    }
 			}
 		    }
-
+		    Collections.sort(FILTERED_COURSES);
 		    Map<EnumDay, List<Course>> courses = new HashMap<EnumDay, List<Course>>();
 
 		    for (Course c : FILTERED_COURSES) {
@@ -181,8 +193,6 @@ public class Main {
 			courses.put(c.getDay(), coursesOfTheDay);
 		    }
 
-		    Collections.sort(FILTERED_COURSES);
-
 		    printTimetableToPdf(title, courses);
 		}
 	    }
@@ -192,7 +202,9 @@ public class Main {
     private static void printTimetableToPdf(String title, Map<EnumDay, List<Course>> courses) {
 	OutputStream os = null;
 	title = title.replace("...", " - ").replace(":", " -");
-	String css = "<style>h1 {text-align:center;}</style>";
+	String css = "<style>" + "h1 {" + "text-align:center;" + "}" + "p {" + "width:100%; "
+		+ "page-break-inside: avoid; " + "border:solid 0px black;} " + "hr{ border-width: 1px 1px 0;"
+		+ "border-style: solid;}" + "</style>";
 
 	String head = "<head>";
 	head += css;
@@ -206,18 +218,36 @@ public class Main {
 	List<EnumDay> sortedDayKeys = new ArrayList<EnumDay>(courses.keySet());
 	Collections.sort(sortedDayKeys);
 
-	for (EnumDay day : sortedDayKeys) {
-	    String date = courses.get(day).get(0).getDate();
-	    html += "<p><h2>" + day.toString() + " - " + date + "</h2>";
+	Iterator<EnumDay> daysIterator = sortedDayKeys.iterator();
 
-	    for (Course c : courses.get(day)) {
+	while (daysIterator.hasNext()) {
+	    EnumDay currentDay = daysIterator.next();
 
-		html += "<b>" + c.getStartingHour() + " - " + c.getEndingHour() + "</b><br/>" + c.getSubject() + "<br/>"
-			+ c.getDescription() + "<br/><br/>";
+	    String date = courses.get(currentDay).get(0).getDate();
+	    html += "<p><h2>" + currentDay.toString() + " - " + date + "</h2>";
+
+	    Iterator<Course> coursesIterator = courses.get(currentDay).iterator();
+
+	    while (coursesIterator.hasNext()) {
+		Course c = coursesIterator.next();
+
+		html += "<b>" + c.getStartingHour() + " - " + c.getEndingHour() + "</b>";
+		html += htmlPageBreak;
+		html += c.getSubject();
+		html += htmlPageBreak;
+		html += c.getDescription();
+		html += htmlPageBreak;
+
+		if (coursesIterator.hasNext()) {
+		    html += htmlPageBreak;
+		}
 	    }
-	    html += "</p>";
-	}
 
+	    html += "</p>";
+	    if (daysIterator.hasNext()) {
+		html += "<hr/>";
+	    }
+	}
 	html += "</body></html>";
 	try {
 	    final File outputFile = new File(title + ".pdf");

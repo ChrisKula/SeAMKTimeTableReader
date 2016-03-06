@@ -28,51 +28,51 @@ public class Course implements Comparable<Course> {
     }
 
     public EnumDay getDay() {
-        return day;
+	return day;
     }
 
     public void setDay(EnumDay day) {
-        this.day = day;
+	this.day = day;
     }
 
     public EnumStartingHour getStartingHour() {
-        return startingHour;
+	return startingHour;
     }
 
     public void setStartingHour(EnumStartingHour startingHour) {
-        this.startingHour = startingHour;
+	this.startingHour = startingHour;
     }
 
     public EnumEndingHour getEndingHour() {
-        return endingHour;
+	return endingHour;
     }
 
     public void setEndingHour(EnumEndingHour endingHour) {
-        this.endingHour = endingHour;
+	this.endingHour = endingHour;
     }
 
     public String getSubject() {
-        return subject;
+	return subject;
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+	this.subject = subject;
     }
 
     public String getDescription() {
-        return description;
+	return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     public String getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+	this.date = date;
     }
 
     @Override
