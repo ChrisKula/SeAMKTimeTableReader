@@ -174,7 +174,7 @@ public class Main {
 		    Collections.sort(FULL_COURSES);
 		    for (Course c : FULL_COURSES) {
 			for (String s : notMyCourses) {
-			    if (c.getSubject().contains(s)) {
+			    if (c.getSubject().toLowerCase().contains(s.toLowerCase())) {
 				FILTERED_COURSES.remove(c);
 				break;
 			    }
@@ -202,7 +202,7 @@ public class Main {
     private static void printTimetableToPdf(String title, Map<EnumDay, List<Course>> courses, String timetableUrl) {
 	OutputStream os = null;
 	title = title.replace("...", " - ").replace(":", " -");
-	String css = "<style>" + "h1 {" + "text-align:center;" + "}" + "p {" + "width:100%; "
+	String css = "<style>* {font-family : Helvetica;} h1 {" + "text-align:center;" + "}" + "p {" + "width:100%; "
 		+ "page-break-inside: avoid; " + "border:solid 0px black;} " + "hr{ border-width: 1px 1px 0;"
 		+ "border-style: solid;}" + "</style>";
 
