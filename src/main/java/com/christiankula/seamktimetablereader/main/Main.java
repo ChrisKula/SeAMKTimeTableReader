@@ -150,7 +150,7 @@ public class Main {
 
 				    timeSlotOverflowMap.put(course.getDay(), rowpsanOverflowSize + 1);
 				} else {
-				    course.setEndingHour(EnumEndingHour.getEndingHourByIndex(rowIndex + 1 - 2));
+				    course.setEndingHour(EnumEndingHour.getEndingHourByIndex(rowIndex - 2));
 				    timeSlotOverflowMap.put(course.getDay(), 0);
 				}
 
