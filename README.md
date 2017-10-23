@@ -1,6 +1,10 @@
-<h2>SeAMKTimeTableReader</h2>
-Simple script to filter SeAMK time tables with only courses you have
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
+<h1>DEPRECATED</h1>
+As I don't attend SeAMK anymore, I can't guarantee it is still working. It was still fun working on it during my Erasmus program in Finland :)
+
+<h2>SeAMKTimeTableReader</h2>
+Simple script to filter SeAMK, university in Seinäjoki, Finland, time tables with only courses you have.
 
 This script allows you to filter SeAMK time tables and create a simple pdf file with your courses ordered by day.
 
